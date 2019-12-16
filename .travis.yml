@@ -29,7 +29,7 @@ script:
   - hugo -d ./dist/
 
 after_success:
-  - MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT)
+  - MESSAGE="Update The Blog"
   - cd dist
   - git init
   - git remote add origin https://github.com/skycity233/Blog.git
