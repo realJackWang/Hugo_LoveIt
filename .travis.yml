@@ -26,7 +26,7 @@ before_script:
   - git config --global user.name ${GITHUB_USERNAME}
 
 script:
-  - hugo -d ./dist/
+  - hugo --gc --minify -d ./dist/
 
 after_success:
   - MESSAGE="Update The Blog"
