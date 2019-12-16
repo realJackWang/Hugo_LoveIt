@@ -1,4 +1,4 @@
-{{ if eq (getenv "HUGO_ENV") "production" | and .IsPage | and (ne .Params.comment false) -}}
+{{ if eq (getenv "HUGO_ENV") "production" | or .IsPage | or (ne .Params.comment false) -}}
     <!-- Disqus Comment System-->
     {{- if .Site.DisqusShortname -}}
         <div id="disqus_thread"></div>
@@ -51,28 +51,26 @@
     {{- end -}}
 
     <!-- valine -->
-    {{- if .Site.Params.valine.enable -}}
-        <div id="vcomments"></div>
-        {{ if eq (getenv "HUGO_ENV") "production" | and .Site.Params.cdn.valine_js }}
-            {{ .Site.Params.cdn.valine_js | safeHTML }}
-        {{ else }}
-            {{- $res := resources.Get "js/lib/valine/Valine.min.js" | resources.Minify -}}
-            <script src="{{ $res.RelPermalink }}"></script>
-        {{ end }}
-        <script type="text/javascript">
-            new Valine({
-                el: "#vcomments",
-                appId: "{{ .Site.Params.valine.appId }}",
-                appKey: "{{ .Site.Params.valine.appKey }}",
-                meta: ["nick", "mail"],
-                notify: "{{ .Site.Params.valine.notify }}",
-                verify: "{{ .Site.Params.valine.verify }}",
-                avatar: "{{ .Site.Params.valine.avatar }}",
-                placeholder: "{{ .Site.Params.valine.placeholder }}",
-                visitor: "{{ .Site.Params.valine.visitor }}",
-                recordIP: "{{ .Site.Params.valine.recordIP }}",
-                lang: "{{ T `valineLang` }}",
-            });
-        </script>
-    {{- end -}}
+      <!-- valine -->
+  {{- if .Site.Params.valine.enable -}}
+  <!-- id 将作为查询条件 -->
+  
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: '{{ .Site.Params.valine.appId }}',
+        appKey: '{{ .Site.Params.valine.appKey }}',
+        notify: '{{ .Site.Params.valine.notify }}', 
+        verify: '{{ .Site.Params.valine.verify }}', 
+        avatar:'{{ .Site.Params.valine.avatar }}', 
+        placeholder: '{{ .Site.Params.valine.placeholder }}',
+        visitor: '{{ .Site.Params.valine.visitor }}'
+    });
+  </script>
+  {{- end -}}
+
 {{- end }}
