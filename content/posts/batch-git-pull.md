@@ -12,6 +12,7 @@ featured_image: https://i.loli.net/2019/10/29/ZqySW1DFQvUs7G8.png
 comment: true
 toc: true
 autoCollapseToc: true
+toc: true
 ---
 
 不废话，放脚本：
@@ -46,7 +47,7 @@ alias gpall="find . -maxdepth 3 -name .git -type d | rev | cut -c 6- | rev | xar
     │   └── zanpress-diagram
     | ... ...
     └── wechat-format
-
+    
     103 directories
 
 103 个目录……我自己 `Documents/GitHub` 文件夹下就有这么多 Git 仓库，一个一个去更新真的很费事情。如何批量更新 GitHub 本地仓库呢？其实就是一个遍历目录，对匹配到的 Git 仓库在其当前分支下执行 `git pull` 的需求嘛，很简单。

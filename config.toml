@@ -3,13 +3,13 @@ languageCode = "en"                                      # website language
 defaultContentLanguage = "en"                            # [en, zh, ...] determines which i18n file to use
 title = "Jack's Blog"                                   # website title
 theme = "LoveIt"                                         # theme
-enableGitInfo = false                                    # whether to use git commit log to generate lastmod record
+enableGitInfo = true                                    # whether to use git commit log to generate lastmod record
 hasCJKLanguage = false                                   # whether to include chinese/japanese/korean
 paginate = 8                                             # amount of posts in each page only when home_mode is post
 enableEmoji = true                                       # whether to use emoji code
 enableRobotsTXT = true                                   # whether to use robots.txt
 googleAnalytics = ""                                     # [UA-XXXXXXXX-X] google analytics code
-disqusShortname = "dillonzq"                             # Disqus shortname to use Disqus in posts
+disqusShortname = ""                                     # Disqus shortname to use Disqus in posts
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
                                                          # copyright description used only for seo schema
 
@@ -23,6 +23,8 @@ staticDir = ["static", "../assets/others"]               # static directories
 
 [author]                                              #### Author Info
   name = "Jack Wang"
+
+
 
 [sitemap]                                             #### Sitemap Info
   changefreq = "weekly"
@@ -223,7 +225,7 @@ staticDir = ["static", "../assets/others"]               # static directories
     appId = "RVvg7rtMR7twqMytNDjBdtzB"
     appKey = "CruAxmRzN5waIqSiWJIMsvQR "
     notify = true
-    verify = true
+    verify = false
     avatar = "mp"
     placeholder = "欢迎留言！"
     visitor = true
