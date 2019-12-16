@@ -34,5 +34,5 @@ after_success:
   - git init
   - git remote add origin https://github.com/skycity233/Blog.git
   - git add .
-  - git commit -m ${MESSAGE}
+  - git commit -m "Update The Blog"
   - git push origin master -f
