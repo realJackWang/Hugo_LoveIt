@@ -70,7 +70,7 @@ staticDir = ["static", "../assets/others"]               # static directories
 	 [[menu.main]]
     identifier = "RSS"
     name = "📮 RSS"
-    url = "https://blog.wangbj.top/posts/index.xml"
+    url = "https://hugo.wangbj.top/posts/index.xml"
     weight = 5
 
 [params]
@@ -129,10 +129,11 @@ staticDir = ["static", "../assets/others"]               # static directories
 
   [params.social]                                        # Social Info in home page
     GitHub = "skycity233"
-    Linkedin = "xxxx"
-    Twitter = "xxxx"
+    #Linkedin = "xxxx"
+    #Twitter = "xxxx"
     #Instagram = "xxxx"
-    #Email = "xxxx"
+    Email = "w1197274057@gmail.com"
+	CSDN = "skycity233"
     #Facebook = "xxxx"
     #Telegram = "xxxx"
     #Medium = "xxxx"
