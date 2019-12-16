@@ -224,8 +224,8 @@ staticDir = ["static", "../assets/others"]               # static directories
 
   [params.valine]                                        # Valine Comment Config (https://github.com/xCss/Valine)
     enable = true
-    appId = "RVvg7rtMR7twqMytNDjBdtzB"
-    appKey = "CruAxmRzN5waIqSiWJIMsvQR "
+    appId = "RVvg7rtMR7twqMytNDjBdtzB-gzGzoHsz"
+    appKey = "CruAxmRzN5waIqSiWJIMsvQR"
     notify = true
     verify = false
     avatar = "mp"
