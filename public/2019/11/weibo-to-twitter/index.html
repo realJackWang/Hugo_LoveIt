@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>IFTTT x Integromat：微博 to Twitter 自动转发的最佳实践 | LoveIt Theme</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Jack&#39;s Blog">
+<link rel="prev" href="https://blog.spencerwoo.com/2019/11/reverse-proxy/" />
+<link rel="canonical" href="https://blog.spencerwoo.com/2019/11/weibo-to-twitter/" />
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IFTTT x Integromat：微博 to Twitter 自动转发的最佳实践"/>
+<meta name="twitter:description" content="IFTTT 网络自动化平台实际上是一个缩写，完全展开的 IFTTT 是「IF this THEN that」- 如果「这」，那么「那」。既然如此，我们利用 IFTTT 就可以实现非常完善的自动化事件处理流程，比如这篇文章我要介绍的就是一个例子：「利用 IFTTT 自动将微博发布的信息同步到 Twitter 上面」的最佳实践。
+ 🎫 附注：
+本文介绍方法高度借鉴于这篇文章：微博同步至 Twitter，这里有更好的方式 - 少数派，但是本文的介绍方式更为清晰易懂，配置简洁明了，同时也解决了一些如果按照原文直接配置的话会出现的意外问题。
+ 背景与工作原理 首先，IFTTT 上面已经有非常多的微博、Twitter 互相自动转发分享的 Applet（就是 IFTTT 的动作），官方甚至都有一个专门的分类，包含了一些基本的微博 → Twitter、Twitter → 微博的动作：Connect Sina Weibo to Twitter to unlock powerful experiences。
+但是单独由 IFTTT 进行「微博 → Twitter」的自动转发有着非常的局限性。IFTTT 无法区分：纯文本原创微博、带图原创微博、以及转发微博这三种微博。如果我们只依赖于 IFTTT 来帮我们进行「微博 → Twitter」转发的话：要么我们只能转发文字 &#43; 原微博链接；要么我们转的带图，但是对于纯文本微博 IFTTT 会发送一张「找不到原图」的 Twitter。因此，今天我们所要介绍的方法，就是利用 Integromat 对 IFTTT 获取到的微博进行路由分流，实现对纯文本微博自动发 IFTTT 纯文本微博转发 Applet、对带图微博自动发 IFTTT 带图微博转发 Applet，并自动过滤掉非原创微博的内容。
+利用 IFTTT 和 Integromat 配合实现路由转发 流程原理 目前和微博平台整合最好、最方便的自动化平台就是 IFTTT，因此我们不能丢掉 IFTTT。利用 IFTTT 获取到微博的信息包括：微博文本、微博原链接以及微博图片链接。因此，我们需要做的就是："/>
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "IFTTT x Integromat：微博 to Twitter 自动转发的最佳实践",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https:\/\/blog.spencerwoo.com\/2019\/11\/weibo-to-twitter\/"
+    },
+    
+        "image": {
+            "@type": "ImageObject",
+            "url": "https:\/\/blog.spencerwoo.com\/cover.png",
+            "width":  800 ,
+            "height":  600 
+        },
+    
+    "genre": "posts",
+    
+        "keywords": "Automation, IFTTT, Weibo, Twitter",
+    
+    "wordcount":  628 ,
+    "url": "https:\/\/blog.spencerwoo.com\/2019\/11\/weibo-to-twitter\/",
+    
+        "datePublished": "2019-11-26T11:46:00\x2b08:00",
+    
+    
+        "dateModified": "2019-11-26T11:46:00\x2b08:00",
+    
+    
+        "license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+    
+    
+        "publisher": {
+            "@type": "Organization",
+            "name": "Jack Wang",
+            "logo": {
+            "@type": "ImageObject",
+            "url": "https:\/\/blog.spencerwoo.com\/logo.png",
+            "width":  127 ,
+            "height":  40 
+            }
+        },
+    
+    
+    "description": ""
+    }
+    </script>
+<link rel="stylesheet" href="/css/style.min.css">
+<link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.min.css">
+
+<link rel="stylesheet" href="/css/lib/animate/animate.min.min.css">
+
+    </head>
+    <body>
+        <script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script>
+        <div class="wrapper">
+            <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <a href="https://blog.spencerwoo.com">LoveIt Theme</a>
+        </div>
+        <div class="navbar-menu">
+            
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/posts/" title="">Posts</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/tags/" title="">Tags</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/categories/" title="">Categories</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/about/" title="">About</a>
+            
+                <a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title=""><i class="fas fa-language fa-fw"></i></a>
+            
+            <a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile">
+     <div class="navbar-container">
+        <div class="navbar-header">
+            <div><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw"></i></a>
+                <span></span>
+                <a href="https://blog.spencerwoo.com">LoveIt Theme</a></div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+            
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/posts/" title="">Posts</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/tags/" title="">Tags</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/categories/" title="">Categories</a>
+            
+                <a class="menu-item" href="https://blog.spencerwoo.com/about/" title="">About</a>
+            
+                <a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title=""><i class="fas fa-language fa-fw"></i></a>
+            
+        </div>
+    </div>
+</nav>
+<main class="main">
+                <div class="container">
+                    
+    
+    
+    
+
+    <article class="post-warp">
+        <h1 class="post-title animated flipInX">IFTTT x Integromat：微博 to Twitter 自动转发的最佳实践</h1>
+
+        <div class="post-meta">
+            <div class="post-meta-main">
+                <a class="author" href="https://blog.spencerwoo.com" rel="author"><i class="fas fa-user-circle fa-fw"></i>Jack Wang&nbsp;</a>
+                <span class="post-category">
+                        included in
+                        <i class="far fa-folder fa-fw"></i><a href="https://blog.spencerwoo.com/categories/automation/">Automation</a>
+                            
+                    </span>
+            </div>
+            <div class="post-meta-other">
+                <i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-11-26>2019-11-26</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 628 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>3 min&nbsp;</div>
+        </div>
+
+        
+            <div class="post-featured-image">
+                <img src=/images/loading.svg data-sizes=auto data-src=https://i.loli.net/2019/11/26/WHF6PDRzq8tEJZr.png alt="featured image" class="lazyload">
+            </div>
+        
+
+        <div class="post-toc" id="post-toc">
+                <h2 class="post-toc-title">Table of Contents</h2>
+                <div class="post-toc-content">
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#heading">背景与工作原理</a></li>
+    <li><a href="#-ifttt--integromat-">利用 IFTTT 和 Integromat 配合实现路由转发</a>
+      <ul>
+        <li><a href="#heading-1">流程原理</a></li>
+        <li><a href="#heading-2">准备工作</a></li>
+        <li><a href="#ifttt--webhook-integromat">IFTTT 触发 Webhook，调用 Integromat</a></li>
+        <li><a href="#ifttt--twitter-">IFTTT 自动发送 Twitter 动作</a></li>
+        <li><a href="#integromat-">Integromat 路由判断树</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading-3">最终的转发效果以及局限性</a></li>
+  </ul>
+</nav>
+                </div>
+            </div>
+            <div class="post-toc-mobile" id="post-toc-mobile">
+                <details>
+                    <summary><div class="post-toc-title"><span>Table of Contents</span><span><i class="details icon fas fa-angle-down"></i></span></div></summary>
+                    <div class="post-toc-content">
+                        
+                        
+                        <nav id="TableOfContentsMobile">
+  <ul>
+    <li><a href="#heading">背景与工作原理</a></li>
+    <li><a href="#-ifttt--integromat-">利用 IFTTT 和 Integromat 配合实现路由转发</a>
+      <ul>
+        <li><a href="#heading-1">流程原理</a></li>
+        <li><a href="#heading-2">准备工作</a></li>
+        <li><a href="#ifttt--webhook-integromat">IFTTT 触发 Webhook，调用 Integromat</a></li>
+        <li><a href="#ifttt--twitter-">IFTTT 自动发送 Twitter 动作</a></li>
+        <li><a href="#integromat-">Integromat 路由判断树</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading-3">最终的转发效果以及局限性</a></li>
+  </ul>
+</nav>
+                    </div>
+                </details>
+            </div>
+
+        <div class="post-content">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p>IFTTT 网络自动化平台实际上是一个缩写，完全展开的 IFTTT 是「IF this THEN that」- 如果「这」，那么「那」。既然如此，我们利用 IFTTT 就可以实现非常完善的自动化事件处理流程，比如这篇文章我要介绍的就是一个例子：「利用 IFTTT 自动将微博发布的信息同步到 Twitter 上面」的最佳实践。</p>
+<blockquote>
+<p><strong>🎫 附注：</strong></p>
+<p>本文介绍方法高度借鉴于这篇文章：<a href="https://sspai.com/post/51942">微博同步至 Twitter，这里有更好的方式 - 少数派</a>，但是本文的介绍方式更为清晰易懂，配置简洁明了，同时也解决了一些如果按照原文直接配置的话会出现的意外问题。</p>
+</blockquote>
+<a class="post-dummy-target" id="heading"></a><h2>背景与工作原理</h2>
+<p>首先，IFTTT 上面已经有非常多的微博、Twitter 互相自动转发分享的 Applet（就是 IFTTT 的动作），官方甚至都有一个专门的分类，包含了一些基本的微博 → Twitter、Twitter → 微博的动作：<a href="https://ifttt.com/connect/sina_weibo/twitter">Connect Sina Weibo to Twitter to unlock powerful experiences</a>。</p>
+<p><img src="https://i.loli.net/2019/11/26/1W6XTByKsDHpZYe.png" alt="IFTTT 官方微博 Twitter 同步 Applet"></p>
+<p>但是单独由 IFTTT 进行「微博 → Twitter」的自动转发有着非常的局限性。IFTTT 无法区分：纯文本原创微博、带图原创微博、以及转发微博这三种微博。如果我们只依赖于 IFTTT 来帮我们进行「微博 → Twitter」转发的话：要么我们只能转发文字 + 原微博链接；要么我们转的带图，但是对于纯文本微博 IFTTT 会发送一张「找不到原图」的 Twitter。因此，今天我们所要介绍的方法，就是利用 Integromat 对 IFTTT 获取到的微博进行路由分流，实现对纯文本微博自动发 IFTTT 纯文本微博转发 Applet、对带图微博自动发 IFTTT 带图微博转发 Applet，并自动过滤掉非原创微博的内容。</p>
+<p><img src="https://i.loli.net/2019/11/29/KrjZGPt8zgpQqNF.png" alt="仅靠 IFTTT 只能单独执行某个转发策略，这不够"></p>
+<a class="post-dummy-target" id="-ifttt--integromat-"></a><h2>利用 IFTTT 和 Integromat 配合实现路由转发</h2>
+<a class="post-dummy-target" id="heading-1"></a><h3>流程原理</h3>
+<p>目前和微博平台整合最好、最方便的自动化平台就是 IFTTT，因此我们不能丢掉 IFTTT。利用 IFTTT 获取到微博的信息包括：微博文本、微博原链接以及微博图片链接。因此，我们需要做的就是：</p>
+<ol>
+<li>先利用 IFTTT 获取最新发送的微博，包括微博文本、微博原链接和微博图片这三项参数</li>
+<li>通过 HTTP 请求在 Integromat 中触发 Webhook，利用 Integromat 解析 IFTTT 发送来的数据，根据「图片的有无」进行路由分配，调用合适的 IFTTT 动作</li>
+<li>Integromat 调用合适的 IFTTT 动作之后，IFTTT 执行发送 Twitter 的 Applet</li>
+<li>结束 👍</li>
+</ol>
+<p><img src="https://i.loli.net/2019/11/27/hX6GfquxD15Kpoy.png" alt="利用 IFTTT 和 Integromat 配合实现微博 Twitter 转发流程"></p>
+<p>我们接下来的基本工作就是按步骤对上面介绍的功能在相应的平台上一一进行实现。</p>
+<a class="post-dummy-target" id="heading-2"></a><h3>准备工作</h3>
+<p>在一切开始之前，我们需要在 IFTTT 和 Integromat 两个平台上做一些准备工作。</p>
+<a class="post-dummy-target" id="-integromat--scenario"></a><h4>在 Integromat 平台创建 Scenario</h4>
+<p>在 <a href="https://www.integromat.com">Integromat</a> 平台注册登录，在 Scenarios 处点击创建：Create a new scenario，搜索 Webhook 并选择，之后点击 Continue 即可。</p>
+<p><img src="https://i.loli.net/2019/11/29/i6zSfaJx4u7kovc.png" alt="Integromat 创建新 Scenario 并选择 Webhook"></p>
+<p>进入创建 Scenario 的界面，我们首先点击中心的问号，选择 Webhooks &gt; Custom Webhooks 作为我们 Scenario 的起点。之后我们配置 Webhook：</p>
+<ul>
+<li>点击 Webhook 设置窗口中的 Add，在弹出的 Add a hook 界面将 Webhook 名称设置为 <strong>IFTTT weibo webhook</strong></li>
+<li>点击左下角的 Show advanced settings，在 Data structure 处添加抓取自微博的数据结构：点击 Add，在弹出的窗口中将数据结构名称命名为 <strong>Weibo data structure</strong>。这就是我们从 IFTTT 获取到的微博博文的三个关键数据的存储方式（微博文本、微博链接和微博图片）</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/29/8xmh1FfwK9SLRvy.png" alt="配置 Webhook、添加 Data structure"></p>
+<ul>
+<li>下面我们开始设置微博数据结构：
+<ul>
+<li>点击右侧 Generator，在弹出的窗口中将 Content type 选择为 <strong>Query String</strong></li>
+<li>在下方 Sample Data 中填入：<code>text=weiboText&amp;url=weiboUrl&amp;image=imageUrl</code>，点击保存之后，我们就得到了一个合适的 Data Structure</li>
+<li>可以看到，上面 Sample Data 实际上就是我们利用 IFTTT 获取到微博数据的一个传递，其中 <code>text</code> 字段保存「微博文本内容：weiboText」、<code>url</code> 字段保存「微博链接：weiboUrl」、<code>image</code> 字段保存「微博图片：imageUrl」</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/29/9EwG8oaXptnMThs.png" alt="配置微博 Data structure"></p>
+<ul>
+<li>将上面步骤配置的内容全部保存，我们得到这样的一个界面：</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/29/R86yFxQpsDWGP1o.png" alt="Integromat Webhook API 地址"></p>
+<ul>
+<li>
+<p>上图里面我框出来的地方就是 Integromat 的 Webhook API 地址。接下来，将上图中的 API 地址复制，在后面添加上我们刚刚声明的数据结构的请求，并在浏览器中访问一下，让 Integromat 对收到的请求进行判断，自动确定数据结构的数据类型</p>
+</li>
+<li>
+<p>需要注意的是，我们需要让这一步中的 URL 跟我们 IFTTT 发送给 Integromat 的请求一致，也就是在刚刚复制的 Integromat 请求地址后面，需要正确的拼接上我们的请求数据，这里给出一个示范：</p>
+<ul>
+<li>
+<p>如果我们的 Integromat Webhook API 地址为：<code>https://hook.integromat.com/{integromat_api_key}</code></p>
+</li>
+<li>
+<p>我们请求的微博文本内容为：<code>TestingMyWebhook</code></p>
+</li>
+<li>
+<p>我们请求的微博原文链接为：<code>https://m.weibo.cn/detail/4444027372221130</code></p>
+</li>
+<li>
+<p>我们请求的微博图片链接为：<code>https://wx4.sinaimg.cn/orj360/63e5c1e1ly1g9f2lmag8hj20k00qoac8.jpg</code></p>
+</li>
+<li>
+<p>那么我们最终拼接出来的 URL 请求为（没有换行，换行方便阅读）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://hook.integromat.com/{integromat_api_key}
+?text=TestingMyWebhook
+&amp;url=https://m.weibo.cn/detail/4444027372221130
+&amp;image=https://wx4.sinaimg.cn/orj360/63e5c1e1ly1g9f2lmag8hj20k00qoac8.jpg
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>将上面的 URL 复制到浏览器中访问，加载完成之后，如果我们得到了正确的数据结构，那么 Integromat 那边会自动显示 Successfully Determined，同时浏览器中会显示 Accepted 字样</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/29/yPjM2fTUav8ldwr.png" alt="成功确定数据结构"></p>
+<p>到这里，我们先将 Integromat 的全部配置保存妥当，将上面 Integromat 的 URL 请求保存，不要关闭标签页，我们继续准备 IFTTT 的配置项目。</p>
+<blockquote>
+<p><strong>🐖 注意：</strong></p>
+<p>如果这里 Integromat 平台未提示 Successfully Determined，或浏览器中未显示 Accepted，那么说明 URL 请求拼接有问题，请再次尝试保证数据结构确定无误，否则会对接下来的配置造成很大影响。</p>
+</blockquote>
+<a class="post-dummy-target" id="-ifttt--webhook-"></a><h4>在 IFTTT 平台找到 Webhook 接口</h4>
+<p>在 IFTTT 平台，我们进入 <a href="https://ifttt.com/maker_webhooks">Webhook 的动作界面</a>，点击右侧的 Documentation，不出意外的话，你会看到专属于你自己的 Webhook Key，我们在 Integromat 中最后就会向这个地址发出 HTTP 请求，传递相应的微博博文数据，触发正确的 IFTTT 动作。因此，请记下这一请求的具体方式，包括请求 URL 以及请求 body 格式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span> <span class="nt">&#34;value1&#34;</span> <span class="p">:</span> <span class="s2">&#34;...&#34;</span><span class="p">,</span> <span class="nt">&#34;value2&#34;</span> <span class="p">:</span> <span class="s2">&#34;...&#34;</span><span class="p">,</span> <span class="nt">&#34;value3&#34;</span> <span class="p">:</span> <span class="s2">&#34;...&#34;</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://i.loli.net/2019/11/29/U7bolMJ13aZD45Y.png" alt="Webhook Documentation"></p>
+<p>接下来，我们在刚刚对两个平台的配置的基础之上，对两个平台进行连接，实现自动化的微博 → Twitter 转发过程。</p>
+<a class="post-dummy-target" id="ifttt--webhook-integromat"></a><h3>IFTTT 触发 Webhook，调用 Integromat</h3>
+<p>首先，我们在 IFTTT 平台创建一个新的 Applet，作为检测到新微博的起始动作。IFTTT 在检测到我们发送一条新微博之后，会向 Integromat 发送一个 HTTP 请求，告知 Integromat 我们的新微博的文本消息、图片内容和原文链接。</p>
+<p><img src="https://i.loli.net/2019/11/29/4Iry8JbMqHD97aY.png" alt="This 选择 Sina Weibo 触发"></p>
+<p>在 IFTTT 上面，点击右上角 <a href="https://ifttt.com/create">头像 &gt; Create</a>，进入创建 Applet 的界面。在 This 处选择 Sina Weibo，选择 New post by you 的触发器。如果要求登录微博那么选择链接即可。</p>
+<p><img src="https://i.loli.net/2019/11/29/9O6GfAsYrVbTtM7.png" alt="That 选择 Webhook 服务"></p>
+<p>在 That 处选择 Webhooks，选择 Make a web request，之后进入配置 Webhook 的界面。<strong>我们在 URL 处填写刚刚 Integromat 的 Webhook API 地址（不包含测试用的拼接部分，即只填入 Integromat 显示的 URL），在 Method 处选择 POST，在 Content Type 处选择 <code>application/x-www-form-urlencode</code>，最后在 Body 处填写：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">text={{Text}}&amp;url={{WeiboURL}}&amp;image={{PhotoURL}}
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://i.loli.net/2019/12/02/knthILgj7M1cuOd.png" alt="填写 Webhook 请求地址，触发 Integromat 动作"></p>
+<p>点击 Create action 保存动作，这样，我们 IFTTT 的起手触发动作就制作完成了。</p>
+<a class="post-dummy-target" id="ifttt--twitter-"></a><h3>IFTTT 自动发送 Twitter 动作</h3>
+<p>接下来，我们在 IFTTT 平台继续创建两个不同的 Applet，分别用来处理带图微博和纯文本微博的转发。我们和之前一样，选择 Create，配置 This 和 That。</p>
+<p>对带图微博：</p>
+<ul>
+<li>This 处选择 Webhooks，选择 Receive a web request，并给 Event name 起名为 <code>image_weibo</code></li>
+<li>That 处选择 Twitter，选择 Post a tweet，并将 Tweet text 设置为：<code>{{Value1}} via Weibo: {{Value2}}</code></li>
+</ul>
+<p>对纯文本微博：</p>
+<ul>
+<li>This 处选择 Webhooks，选择 Receive a web request，并给 Event name 起名为 <code>text_weibo</code></li>
+<li>That 处选择 Twitter，选择 Post a tweet with image，并将 Tweet text 设置为：<code>{{Value1}} via Weibo: {{Value2}}</code>，将 Image URL 设置为：<code>{{Value3}}</code></li>
+</ul>
+<blockquote>
+<p><strong>🍧 注意：</strong></p>
+<p>这里，我们将从 Integromat 中收到即将发送的推特的三个参数，分别为原微博的文本内容、原微博链接以及（如果有）原微博的图片。在 IFTTT 中，我们分别设置这三个参数：</p>
+<ul>
+<li><code>{{Value1}}</code>：原微博文本</li>
+<li><code>{{Value2}}</code>：原微博链接</li>
+<li><code>{{Value3}}</code>：原微博图片（如果有）</li>
+</ul>
+<p>这里的三个 Key 就是 <code>{{ ... }}</code> 所包含的内容，这里的配置会和接下来 Integromat 的请求一致。</p>
+</blockquote>
+<p>这样，我们 IFTTT 平台的配置就基本完成了。接下来我们对 Integromat 的动作进行完善。</p>
+<a class="post-dummy-target" id="integromat-"></a><h3>Integromat 路由判断树</h3>
+<p><img src="https://i.loli.net/2019/12/02/6v5qX2zT1Hcde9n.png" alt="Integromat 路由判断树"></p>
+<p>在我们刚刚创建的 Scenario 里面，Webhook 后面，添加一个路由选择：Router。（点击右侧突出的半圆即可添加新的元素，搜索 Router，点击 Flow control 并选择 Router 即可添加。）</p>
+<p>在 Router 中第一条分支上面点击，选择设置 Filter，在 Label 处为分支起名为：ImageWeibo，用来专门处理带图片的微博。<strong>在 Condition 里配置 Image contains <code>http</code> 的判断条件</strong>，用来正确的调用合适的 IFTTT 动作。</p>
+<p><img src="https://i.loli.net/2019/12/02/kHB45v3TtJxcnhC.png" alt="第一条分支的 Filter 过滤器"></p>
+<blockquote>
+<p><strong>🍳 注意：</strong></p>
+<p>在最初少数派的文章介绍之中，原作者用「Image exists」作为判断条件。经过我的调试发现：即使是并没有包含图片的纯文本微博，在 IFTTT 抓取微博信息并传到 Integromat 之后，Integromat 判断树并不能正确的判断这条微博没有图片，而是会自动触发默认路径，导致我们依旧发出一条带有「IFTTT 找不到图片」的推特。因此，这里我使用的判断条件为：「Image contains <code>http</code>」。</p>
+</blockquote>
+<p>在分支末端点击问号，搜索 HTTP，选择 Make a request。之后：</p>
+<ul>
+<li>在 URL 中填入 IFTTT 带图微博转发的 Applet Webhook 请求地址：<code>https://maker.ifttt.com/trigger/image_weibo/with/key/{IFTTT API Key}</code>（将 <code>{IFTTT API Key}</code> 更换为上面在 IFTTT Webhook Documentation 中配置的 Key。）</li>
+<li>在下面的 Method 中选择 POST</li>
+<li>Body type 中选择 <code>application/x-www-form-urlencode</code></li>
+<li>在 Fields 中点击 Add item：
+<ul>
+<li>Key 填入 <code>value1</code>，Value 选择 <code>text</code></li>
+<li>Key 填入 <code>value2</code>，Value 选择 <code>url</code></li>
+<li>Key 填入 <code>value3</code>，Value 选择 <code>image</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/12/02/A7Cam4tQzJBfu5b.png" alt="触发 IFTTT 带图微博转发 Applet"></p>
+<p>在第二条分支上面点击，选择设置 Filter 并填入 Label 为 PureTextWeibo，在 Condition 处设置筛选条件为：</p>
+<ul>
+<li>Image <em>Does not contain</em> <code>http</code> <strong>AND</strong></li>
+<li>Text <em>Does not match pattern (case insensitive)</em> <code>(Repost)|(转发微博)|(\/\/)|(轉發微博)</code></li>
+</ul>
+<p>两个判断条件进行「与」运算，保证满足两条内容才能触发本条规则。</p>
+<p><img src="https://i.loli.net/2019/12/02/T1cpRHlqawrdi84.png" alt="第二条分支的 Filter 过滤器"></p>
+<p>在分支末端点击问号，搜索 HTTP，选择 Make a request。之后：</p>
+<ul>
+<li>在 URL 中填入 IFTTT 纯文本微博转发的 Applet Webhook 请求地址：<code>https://maker.ifttt.com/trigger/text_weibo/with/key/{IFTTT API Key}</code>（将 <code>{IFTTT API Key}</code> 更换为上面在 IFTTT Webhook Documentation 中配置的 Key。）</li>
+<li>在下面的 Method 中选择 POST</li>
+<li>Body type 中选择 <code>application/x-www-form-urlencode</code></li>
+<li>在 Fields 中点击 Add item：
+<ul>
+<li>Key 填入 <code>value1</code>，Value 选择 <code>text</code></li>
+<li>Key 填入 <code>value2</code>，Value 选择 <code>url</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/12/02/h9GcBaOuexkiUSI.png" alt="触发 IFTTT 纯文本微博转发 Applet"></p>
+<p>到这里，保存 Scenario，我们基本配置任务就完成了。( •̀ ω •́ )y</p>
+<a class="post-dummy-target" id="heading-3"></a><h2>最终的转发效果以及局限性</h2>
+<p>如果一些顺利，那么我们就应该可以直接让 IFTTT 和 Integromat 配合在云端默默监控我们的最新微博，并自动的根据合适的方式帮我们转发至 Twitter。</p>
+<p><img src="https://i.loli.net/2019/12/07/F8Pgq2keAU3Sfw5.png" alt=""></p>
+<p>但是，这种转发方式还是有一定的限制，其中最为致命的实际上就是：IFTTT 只能捕获微博的第一张图片，多于一张的图片我们就只能将第一张图片转发到 Twitter。同时 Integromat 的同步次数也有一定的限制，每个月相当于最多能转发 500 条原创微博。不过这些对我来说还是足够的，如果有更多的需求，我推荐大家购买完整版的「奇点」微博客户端，能够自动每次发微博的同时发送推特，更为方便。这篇文章的介绍就到这里，感谢阅读。</p>
+
+        </div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>This article is updated with 2019-11-26</span>
+            </div>
+            <div class="post-info-license">
+                
+            </div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md">
+                
+                    
+                        <span><a class="link-to-markdown" href="https://blog.spencerwoo.com/2019/11/weibo-to-twitter/index.md" target="_blank"></a></span>
+                    
+                
+            </div>
+            <div class="post-info-share">
+                
+                    <span>
+    
+        <a href="//twitter.com/share?url=https%3a%2f%2fblog.spencerwoo.com%2f2019%2f11%2fweibo-to-twitter%2f&amp;text=IFTTT%20x%20Integromat%ef%bc%9a%e5%be%ae%e5%8d%9a%20to%20Twitter%20%e8%87%aa%e5%8a%a8%e8%bd%ac%e5%8f%91%e7%9a%84%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5&amp;via=xxxx" target="_blank" title="Share on Twitter">
+            <i class="fab fa-twitter fa-fw"></i>
+        </a>
+    
+    
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.spencerwoo.com%2f2019%2f11%2fweibo-to-twitter%2f" target="_blank" title="Share on Facebook">
+            <i class="fab fa-facebook-square fa-fw"></i>
+        </a>
+    
+    
+        <a href="//reddit.com/submit?url=https%3a%2f%2fblog.spencerwoo.com%2f2019%2f11%2fweibo-to-twitter%2f&amp;title=IFTTT%20x%20Integromat%ef%bc%9a%e5%be%ae%e5%8d%9a%20to%20Twitter%20%e8%87%aa%e5%8a%a8%e8%bd%ac%e5%8f%91%e7%9a%84%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" target="_blank" title="Share on Reddit">
+            <i class="fab fa-reddit fa-fw"></i>
+        </a>
+    
+    
+    
+    
+    
+    
+    
+    
+</span>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section>
+            
+                
+                    <span class="tag">
+                        <a href="https://blog.spencerwoo.com/tags/automation/"><i class="fas fa-tag fa-fw"></i>Automation</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://blog.spencerwoo.com/tags/ifttt/"><i class="fas fa-tag fa-fw"></i>IFTTT</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://blog.spencerwoo.com/tags/weibo/"><i class="fas fa-tag fa-fw"></i>Weibo</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="https://blog.spencerwoo.com/tags/twitter/"><i class="fas fa-tag fa-fw"></i>Twitter</a>
+                    </span>
+                
+            
+        </section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://blog.spencerwoo.com">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+            <a href="https://blog.spencerwoo.com/2019/11/reverse-proxy/" class="prev" rel="prev" title="Reverse Proxy | 反向代理是什么？"><i class="fas fa-angle-left fa-fw"></i>Reverse Proxy | 反向代理是什么？</a>
+        
+        
+    </div>
+</div>
+
+        <div class="post-comment">
+            
+            
+
+            
+        </div>
+    </article></div>
+            </main>
+            <footer class="footer">
+    <div class="copyright">
+        <div class="copyright-line">
+            
+            </i> Runs on 🚀 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> and ❤️ love
+        </div>
+        <div class="copyright-line">
+            <i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.spencerwoo.com">Jack Wang</a></span><span class="license">&nbsp;|&nbsp;<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+
+
+
+    
+    
+
+
+
+
+
+    
+    
+
+
+<script src="/js/lib/jquery/jquery.slim.min.min.js"></script>
+<script src="/js/lib/lazysizes/lazysizes.min.min.js"></script>
+<script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script>
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+<script src="/js/blog.min.js"></script>
+
+
+    
+</div>
+        <a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll><span>&nbsp;</span></a>
+    </body>
+</html>

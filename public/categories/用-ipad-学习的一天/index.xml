@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>用 iPad 学习的一天 on LoveIt Theme</title>
+    <link>https://blog.spencerwoo.com/categories/%E7%94%A8-ipad-%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E5%A4%A9/</link>
+    <description>Recent content in 用 iPad 学习的一天 on LoveIt Theme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 14 Nov 2019 06:24:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.spencerwoo.com/categories/%E7%94%A8-ipad-%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E5%A4%A9/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working Copy &#43; iA Writer：第二次尝试从我的 iPad 上面更新博客</title>
+      <link>https://blog.spencerwoo.com/2019/11/update-from-ipad-iawriter/</link>
+      <pubDate>Thu, 14 Nov 2019 06:24:53 +0000</pubDate>
+      
+      <guid>https://blog.spencerwoo.com/2019/11/update-from-ipad-iawriter/</guid>
+      <description>之前，我就曾经介绍过我是如何利用 iPad 对部署在 GitHub 上面的静态博客进行更新的。这篇文章即使到现在也有一定的借鉴意义，文章归档于：使用 Working Copy 在 iPad 上面更新博客 | 一次随缘的更新。
+现在，我重新部署了我的静态博客，利用 Hugo 进行构建。宣称全球最快的静态网站渲染引擎 —— Hugo 着实让我博客的编译和部署过程快人一步。借助于方便的 Netlify，只要配置好 CI 的编译命令和环境变量，我们就只需要专注于博客本身的撰写，而不必对博客其他属性进行过多的担心。这样的部署方法，让 iPad 都可以直接发表博文。
+前言 为什么我又换回了静态博客？Listed 确实不错，但是我在给与之配套的笔记应用 Standard Notes 充值一年会员之后，发现 Standard Notes 真的不行。不论是应用本身的响应还是界面的设计，Standard Notes 都和 Bear 等一众笔记应用相距甚远。Listed 博客需要会员才能自定义域名，并且 Listed 本身也没有评论系统，只有一个类似留言板的 Guestbook，难过。
+另外，我还专门问了问开发者为什么 Listed 不支持评论：
+// 我猜是开发者被垃圾评论骂怕了 😂
+就这样，Hugo 就变成了目前我的博客部署引擎首选。
+设备和工具 更新博客我试用了下面的设备：
+ iPad Air (3rd Gen) Logitech K380：键盘 Logitech M558：鼠标  在 iPad 上面，我尝试使用 iA Writer 来编辑 Markdown 文档，利用 Working Copy 来更新 GitHub 仓库。由于 Working Copy 支持 Edit in place，因此我们在 iA Writer 中可以导入 Working Copy 的某个文件夹（比如博文文件夹 posts），从而直接编辑其中的 Markdown 文件。</description>
+    </item>
+    
+  </channel>
+</rss>
