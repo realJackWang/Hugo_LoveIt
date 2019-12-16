@@ -56,9 +56,9 @@ staticDir = ["static", "../assets/others"]               # static directories
     weight = 3
 
   [[menu.main]]
-    identifier = "about"
+    identifier = "tips"
     name = "Tips"
-    url = "/about/"
+    url = "/tips/"
     weight = 4
 
   [[menu.main]]
