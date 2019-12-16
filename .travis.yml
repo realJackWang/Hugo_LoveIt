@@ -9,7 +9,7 @@ python: 3.7
 # 使用python下载已发布的hugo安装更快
 
 before_install:
-  - sudo apt-get update -qq
+  - sudo apt-get update
   - sudo apt-get -yq install apt-transport-https
 
   # install - install any dependencies required
