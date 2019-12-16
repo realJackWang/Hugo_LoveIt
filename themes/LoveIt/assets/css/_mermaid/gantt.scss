@@ -1,10 +1,5 @@
 /** Section styling */
 
-.mermaid-main-font {
-  font-family: "trebuchet ms", verdana, arial;
-  font-family: var(--mermaid-font-family);
-}
-
 .section {
   stroke: none;
   opacity: 0.2;
@@ -44,9 +39,6 @@
   text-anchor: start;
   font-size: 11px;
   text-height: 14px;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
-
 }
 
 
@@ -56,10 +48,6 @@
   stroke: $gridColor;
   opacity: 0.3;
   shape-rendering: crispEdges;
-  text {
-    font-family: 'trebuchet ms', verdana, arial;
-    font-family: var(--mermaid-font-family);
-  }
 }
 
 .grid path {
@@ -86,11 +74,6 @@
 
 .taskText {
   text-anchor: middle;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
-}
-
-.taskText:not([font-size]) {
   font-size: 11px;
 }
 
@@ -98,9 +81,6 @@
   fill: $taskTextDarkColor;
   text-anchor: start;
   font-size: 11px;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
-
 }
 
 .taskTextOutsideLeft {
@@ -253,6 +233,4 @@
   text-anchor: middle;
   font-size: 18px;
   fill: $taskTextDarkColor;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
 }

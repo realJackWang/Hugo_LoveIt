@@ -1,6 +1,5 @@
 .label {
   font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
   color: #333;
 }
 
@@ -17,9 +16,6 @@
   stroke-width: 1px;
 }
 
-.node .label {
-  text-align: center;
-}
 .node.clickable {
   cursor: pointer;
 }
@@ -35,7 +31,6 @@
 
 .edgeLabel {
   background-color: $edgeLabelBackground;
-  text-align: center;
 }
 
 .cluster rect {
@@ -54,7 +49,6 @@ div.mermaidTooltip {
   max-width: 200px;
   padding: 2px;
   font-family: 'trebuchet ms', verdana, arial;
-  font-family: var(--mermaid-font-family);
   font-size: 12px;
   background: $secondBkg;
   border: 1px solid $border2;
