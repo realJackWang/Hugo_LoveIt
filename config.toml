@@ -1,7 +1,7 @@
-baseURL = "https://blog.wangbj.top"
+baseURL = "https://hugo.wangbj.top"
 languageCode = "en"                                      # website language
 defaultContentLanguage = "en"                            # [en, zh, ...] determines which i18n file to use
-title = "LoveIt Theme"                                   # website title
+title = "Jack's Blog"                                   # website title
 theme = "LoveIt"                                         # theme
 enableGitInfo = false                                    # whether to use git commit log to generate lastmod record
 hasCJKLanguage = false                                   # whether to include chinese/japanese/korean
@@ -33,6 +33,7 @@ staticDir = ["static", "../assets/others"]               # static directories
   posts = "/:year/:month/:filename/"
 
 [menu]                                                #### Menu Info
+  
   [[menu.main]]
     identifier = "posts"
     name = "Posts"
@@ -58,9 +59,9 @@ staticDir = ["static", "../assets/others"]               # static directories
     weight = 4
 
   [[menu.main]]
-    identifier = "zh"
-    name = '<i class="fas fa-language fa-fw"></i>'
-    url = "https://hugo-loveit-zh.netlify.com"
+    identifier = "Hexo"
+    name = '🌐 Hexo Blog'
+    url = "https://blog.wangbj,top"
     weight = 5
 
 [params]
