@@ -102,9 +102,9 @@ staticDir = ["static", "../assets/others"]               # static directories
   [params.cdn]                                       #### CSS and JS Files CDN
     fontawesome_free_css = ''                           
     animate_css = ''
-    gitalk_css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spencerwooo/blog@5d6bcd8b7bf94ce66d118368c724708d67bd83de/themes/LoveIt/assets/css/lib/gitalk/gitalk.css">'
-    gitalk_js = '<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>'
-    valine_js = ''
+    gitalk_css = ''
+    gitalk_js = ''
+    valine_js = '<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>'
     jquery_js = ''
     lazysizes_js = ''
     smooth_scroll_js = ''
@@ -183,7 +183,7 @@ staticDir = ["static", "../assets/others"]               # static directories
     #Thingiverse = "xxxx"
 
   [params.share]                                         # Social Share Links in post page
-    enable = true
+    enable = false
     Twitter = true
     Facebook = true
     Reddit = true
@@ -212,11 +212,11 @@ staticDir = ["static", "../assets/others"]               # static directories
     width = 800
     height = 600
 
-  [params.gitalk]                                        # Gittalk Comment Config (https://github.com/gitalk/gitalk)
-    owner = ""
-    repo = ""
-    clientId = ""
-    clientSecret = ""
+# [params.gitalk]                                        # Gittalk Comment Config (https://github.com/gitalk/gitalk)
+#   owner = ""
+#   repo = ""
+#   clientId = ""
+#   clientSecret = ""
 
   [params.valine]                                        # Valine Comment Config (https://github.com/xCss/Valine)
     enable = true
