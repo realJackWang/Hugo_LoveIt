@@ -56,9 +56,9 @@ staticDir = ["static", "../assets/others"]               # static directories
     weight = 3
 
   [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
+    identifier = "tips"
+    name = "Tips"
+    url = "/tips/"
     weight = 4
 
   [[menu.main]]
@@ -256,3 +256,8 @@ staticDir = ["static", "../assets/others"]               # static directories
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
   taxonomyTerm = ["HTML"]
+  
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
