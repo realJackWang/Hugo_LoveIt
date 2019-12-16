@@ -14,7 +14,7 @@ tags:
 - Github
 - Python
 categories:
-featured_image: https://i.loli.net/2019/12/14/L3ZzHyqvshx9c2o.png
+featured_image: https://i.loli.net/2019/12/16/Uw9ArOWyRGjxaFM.png
 ---
 
 
