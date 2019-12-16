@@ -39,6 +39,7 @@ staticDir = ["static", "../assets/others"]               # static directories
     name = "Posts"
     url = "/posts/"
     weight = 1
+	pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
 
   [[menu.main]]
     identifier = "tags"
@@ -60,8 +61,14 @@ staticDir = ["static", "../assets/others"]               # static directories
 
   [[menu.main]]
     identifier = "Hexo"
-    name = '🌐 Hexo Blog'
+    name = '🌐 Hexo'
     url = "https://blog.wangbj.top"
+    weight = 5
+	
+	 [[menu.main]]
+    identifier = "RSS"
+    name = "📮 RSS"
+    url = "https://blog.wangbj.top/posts/index.xml"
     weight = 5
 
 [params]
@@ -95,7 +102,7 @@ staticDir = ["static", "../assets/others"]               # static directories
   [params.cdn]                                       #### CSS and JS Files CDN
     fontawesome_free_css = ''                           
     animate_css = ''
-    gitalk_css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">'
+    gitalk_css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/spencerwooo/blog@5d6bcd8b7bf94ce66d118368c724708d67bd83de/themes/LoveIt/assets/css/lib/gitalk/gitalk.css">'
     gitalk_js = '<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>'
     valine_js = ''
     jquery_js = ''
@@ -206,19 +213,19 @@ staticDir = ["static", "../assets/others"]               # static directories
     height = 600
 
   [params.gitalk]                                        # Gittalk Comment Config (https://github.com/gitalk/gitalk)
-    owner = "skycity233"
-    repo = "comments"
-    clientId = "cb280d44917c7a3b9eca"
-    clientSecret = "41ab1f9fa129ae4f2b182e82aa095e4a4ee40e1e"
+    owner = ""
+    repo = ""
+    clientId = ""
+    clientSecret = ""
 
   [params.valine]                                        # Valine Comment Config (https://github.com/xCss/Valine)
-    enable = false
-    appId = ""
-    appKey = ""
-    notify = false
+    enable = true
+    appId = "RVvg7rtMR7twqMytNDjBdtzB"
+    appKey = "CruAxmRzN5waIqSiWJIMsvQR "
+    notify = true
     verify = true
     avatar = "mp"
-    placeholder = "Your comment ..."
+    placeholder = "欢迎留言！"
     visitor = true
     recordIP = true
 

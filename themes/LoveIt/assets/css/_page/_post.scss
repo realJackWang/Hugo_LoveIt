@@ -1,14 +1,13 @@
 /** Post **/
 .post-title {
   margin: 0 !important;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 3rem;
 }
 
 .post-meta {
   font-size: .88rem;
   color: rgba(85, 85, 85, 0.52941) !important;
-  padding: 1rem 0;
 
   span {
     display: inline-block;
@@ -56,7 +55,7 @@
   position: absolute;
   width: 240px;
   max-width: 300px;
-  margin-left: 800px;
+  margin-left: 980px;
   padding: .8rem;
   border-left: 1px solid $global-border-color;
   word-wrap: break-word;
@@ -183,38 +182,11 @@
     }
   }
 
-  h3::before {
-    content: "##";
-    margin-right: .3125rem;
-    color: $post-link-color;
-
-    .dark-theme & {
-      color: $post-link-color-dark;
-    }
-  }
-
-  h4::before {
-    content: "###";
-    margin-right: .3125rem;
-    color: $post-link-color;
-
-    .dark-theme & {
-      color: $post-link-color-dark;
-    }
-  }
-
-  h5::before {
-    content: "####";
-    margin-right: .3125rem;
-    color: $post-link-color;
-
-    .dark-theme & {
-      color: $post-link-color-dark;
-    }
-  }
-
+  h3::before,
+  h4::before,
+  h5::before,
   h6::before {
-    content: "#####";
+    content: "|";
     margin-right: .3125rem;
     color: $post-link-color;
 
@@ -225,9 +197,8 @@
 
   p {
     font-size: 1rem;
-    margin: 0.3rem 0 1rem 0;
-    line-height: 2rem;
-    // text-align: justify;
+    margin: .5rem 0 .5rem 0;
+    text-align: justify;
   }
 
   a {
@@ -247,13 +218,8 @@
     }
   }
 
-  ol {
-    line-height: 2rem;
-  }
-
   ul {
     padding-left: 2rem;
-    line-height: 2rem;
   }
 
   ruby {
@@ -308,7 +274,6 @@
 
   figure {
     text-align: center;
-    margin: 0;
   }
 
   .image-caption:not(:empty) {
@@ -317,7 +282,7 @@
     display: inline-block;
     padding: .625rem;
     margin: 0 auto;
-    // border-bottom: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
     font-size: .875rem;
     color: #969696;
     line-height: 1.7;
@@ -334,38 +299,32 @@
   blockquote {
     font-size: 1rem;
     display: block;
-    // border-width: 1px 0;
-    // border-style: solid;
-    // border-color: $global-border-color;
-    border-radius: .6rem;
-    background-color: $code-background-color;
-    padding: 0.5em 1.2em 0.5em 1.2em;
-    // margin: 2em 0 2em 0;
-    margin: 1rem 0 1rem 0;
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: $global-border-color;
+    padding: 1.5em 1.2em 0.5em 1.2em;
+    margin: 0 0 2em 0;
     position: relative;
-    .dark-theme & {
-      background-color: $code-background-color-dark;
+
+    &:before {
+      content: '\201C';
+      position: absolute;
+      top: 0em;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 3rem;
+      height: 2rem;
+      font: 6em/1.08em 'PT Sans', sans-serif;
+      color: $post-link-color;
+      text-align: center;
+
+      .dark-theme & {
+        color: $post-link-color-dark;
+      }
     }
 
-    // &:before {
-    //   content: '\201C';
-    //   position: absolute;
-    //   top: 0em;
-    //   left: 50%;
-    //   transform: translate(-50%, -50%);
-    //   width: 3rem;
-    //   height: 2rem;
-    //   font: 6em/1.08em 'PT Sans', sans-serif;
-    //   color: $post-link-color;
-    //   text-align: center;
-
-    //   .dark-theme & {
-    //     color: $post-link-color-dark;
-    //   }
-    // }
-
     &:after {
-      content: "# QUOTE" attr(cite);
+      content: "#blockquote" attr(cite);
       display: block;
       text-align: right;
       font-size: 0.875em;
