@@ -15,6 +15,7 @@ tags:
 - Python
 categories:
 featured_image: https://i.loli.net/2019/12/16/Uw9ArOWyRGjxaFM.png
+featured_image_preview: 
 ---
 
 
