@@ -61,7 +61,7 @@ staticDir = ["static", "../assets/others"]               # static directories
   [[menu.main]]
     identifier = "Hexo"
     name = '🌐 Hexo Blog'
-    url = "https://blog.wangbj,top"
+    url = "https://blog.wangbj.top"
     weight = 5
 
 [params]
