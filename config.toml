@@ -1,4 +1,4 @@
-baseURL = ""
+baseURL = "https://hugo.wangbj.top/"
 languageCode = "en"                                      # website language
 defaultContentLanguage = "en"                            # [en, zh, ...] determines which i18n file to use
 title = "Jack's Blog"                                   # website title
