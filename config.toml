@@ -37,6 +37,13 @@ staticDir = ["static", "../assets/others"]               # static directories
 [menu]                                                #### Menu Info
   
   [[menu.main]]
+    identifier = "Me"
+    name = "🙋‍♂️ Me"
+    url = "https://wangbj.top"
+    weight = 1
+	pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
+  
+  [[menu.main]]
     identifier = "posts"
     name = "Posts"
     url = "/posts/"
