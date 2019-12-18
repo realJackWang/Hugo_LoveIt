@@ -47,38 +47,38 @@ staticDir = ["static", "../assets/others"]               # static directories
     identifier = "posts"
     name = "Posts"
     url = "/posts/"
-    weight = 1
+    weight = 2
 	pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
 
   [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 2
+    weight = 3
 
   [[menu.main]]
     identifier = "categories"
     name = "Categories"
     url = "/categories/"
-    weight = 3
+    weight = 4
 
   [[menu.main]]
     identifier = "tips"
     name = "Tips"
     url = "/tips/"
-    weight = 4
+    weight = 5
 
   [[menu.main]]
     identifier = "Hexo"
     name = '🌐 Hexo'
     url = "https://blog.wangbj.top"
-    weight = 5
+    weight = 6
 	
 	 [[menu.main]]
     identifier = "RSS"
     name = "📮 RSS"
     url = "https://hugo.wangbj.top/posts/index.xml"
-    weight = 5
+    weight = 7
 
 [params]
   version = "5.x"                                        # LoveIt theme version
