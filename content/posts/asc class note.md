@@ -1,6 +1,5 @@
 ---
 title: ASC上课笔记
-toc: true
 abbrlink: 5101
 date: 2019-01-14 15:51:05
 excerpt: Jack Wang published on 2019-1-14

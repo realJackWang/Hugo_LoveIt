@@ -1,10 +1,10 @@
 baseURL = "https://hugo.wangbj.top/"
-languageCode = "en"                                      # website language
+#languageCode = "en"                                      # website language
 defaultContentLanguage = "zh"                            # [en, zh, ...] determines which i18n file to use
 title = "Jack's Blog"                                   # website title
 theme = "LoveIt"                                         # theme
 enableGitInfo = true                                    # whether to use git commit log to generate lastmod record
-hasCJKLanguage = false                                   # whether to include chinese/japanese/korean
+hasCJKLanguage = true                                   # whether to include chinese/japanese/korean
 paginate = 8                                             # amount of posts in each page only when home_mode is post
 enableEmoji = true                                       # whether to use emoji code
 enableRobotsTXT = true                                   # whether to use robots.txt

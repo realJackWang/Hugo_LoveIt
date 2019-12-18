@@ -1,3 +1,9 @@
+---
+autoCollapseToc: true
+draft: false
+doc: true
+---
+
 ## Hugo有关的坑
 
 ### html代码在.md文件中无法显示
@@ -29,7 +35,7 @@
 
 ### valine评论无法去除算数验证
 
-需同时设定notify和verify为false
+~~需同时设定notify和verify为false~~  更新：貌似无法解决
 
 
 
@@ -38,6 +44,10 @@
 🌐 [LoveIt主题需要安装hugo-extended才能正常编译](https://github.com/liuzc/LeaveIt#hugo-extended-sassscss-version-required)
 
 
+
+### 字数统计无法统计中文
+
+config.toml中设定`hasCJKLanguage = true   `
 
 
 
