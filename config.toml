@@ -1,4 +1,4 @@
-baseURL = "https://hugo.wangbj.top/"
+baseURL = "https://hugo.jackwang.cn/"
 #languageCode = "en"                                      # website language
 defaultContentLanguage = "zh"                            # [en, zh, ...] determines which i18n file to use
 title = "Jack's Blog"                                   # website title
@@ -39,7 +39,7 @@ staticDir = ["static", "../assets/others"]               # static directories
   [[menu.main]]
     identifier = "Me"
     name = "🙋‍♂️ Me"
-    url = "https://wangbj.top"
+    url = "https://jackwang.cn"
     weight = 1
 	pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
   
@@ -71,13 +71,13 @@ staticDir = ["static", "../assets/others"]               # static directories
   [[menu.main]]
     identifier = "Hexo"
     name = '🌐 Hexo'
-    url = "https://blog.wangbj.top"
+    url = "https://blog.jackwang.cn"
     weight = 6
 	
 	 [[menu.main]]
     identifier = "RSS"
     name = "📮 RSS"
-    url = "https://hugo.wangbj.top/posts/index.xml"
+    url = "https://hugo.jackwang.cn/posts/index.xml"
     weight = 7
 
 [params]
