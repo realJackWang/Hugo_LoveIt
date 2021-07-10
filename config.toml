@@ -1,4 +1,4 @@
-baseURL = "https://hugo.jackwang.cn/"
+baseURL = "https://blog.jackwang.cn/"
 #languageCode = "en"                                      # website language
 defaultContentLanguage = "zh"                            # [en, zh, ...] determines which i18n file to use
 title = "Jack's Blog"                                   # website title
@@ -67,23 +67,23 @@ staticDir = ["static", "../assets/others"]               # static directories
     name = "Tips"
     url = "/tips/"
     weight = 5
-
-  [[menu.main]]
-    identifier = "Hexo"
-    name = '🌐 Hexo'
-    url = "https://blog.jackwang.cn"
-    weight = 6
+  
+  #[[menu.main]]
+  #  identifier = "Hexo"
+  #  name = '🌐 Hexo'
+  #  url = "https://blog.jackwang.cn"
+  #  weight = 6
 	
 	 [[menu.main]]
     identifier = "RSS"
     name = "📮 RSS"
-    url = "https://hugo.jackwang.cn/posts/index.xml"
+    url = "https://blog.jackwang.cn/posts/index.xml"
     weight = 7
 
 [params]
   version = "5.x"                                        # LoveIt theme version
   comment = true
-  description = "Jack's Blog"                      # site description
+  description = "JackWang's Blog"                      # site description
   keywords = ["Jack Wang", "Jack", "Wang","Blog"]                   # site keywords
 
                                                       #### Home Page Info
